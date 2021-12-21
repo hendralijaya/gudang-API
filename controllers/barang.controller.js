@@ -100,7 +100,7 @@ async function deleteBarang(req, res) {
     const id = req.params.id;
     const barang = await Barang.destroy({ where: { id } });
     if (barang) {
-      res.status(200).json({ msg: "Barang is deleted" });
+      res.status(200).json({ msg: "Barang has been deleted" });
     } else {
       res.status(404).json({ msg: "Barang not found" });
     }
