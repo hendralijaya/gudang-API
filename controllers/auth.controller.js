@@ -35,10 +35,7 @@ async function signin(req, res) {
           process.env.JWT_SEC,
           { expiresIn: "1h" }
         );
-        res
-          .status(200)
-          .json({ token: accessToken })
-          .cookie("auth", accessToken, { maxAge: 60 * 60 });
+        res.status(200).json({ token: accessToken });
       } else {
         res.status(404).json({ msg: "Login failed" });
       }
@@ -50,12 +47,4 @@ async function signin(req, res) {
   }
 }
 
-function logout(req, res) {
-  try {
-    res.cookie("auth", "", { maxAge: 1 });
-  } catch (err) {
-    console.log(err);
-  }
-}
-
-module.exports = { signup, signin, logout };
+module.exports = { signup, signin };
