@@ -1,5 +1,5 @@
 const { genSalt, hash, compare } = require("bcrypt");
-const { sign } = require("jsonwebtoken");
+const { sign, decode } = require("jsonwebtoken");
 require("dotenv").config();
 const { User } = require("../models");
 
@@ -35,7 +35,10 @@ async function signin(req, res) {
           process.env.JWT_SEC,
           { expiresIn: "1h" }
         );
-        res.status(200).json({ token: accessToken });
+        res
+          .status(200)
+          .json({ token: accessToken })
+          .cookie("auth", accessToken, { maxAge: 60 * 60 });
       } else {
         res.status(404).json({ msg: "Login failed" });
       }
@@ -47,4 +50,12 @@ async function signin(req, res) {
   }
 }
 
-module.exports = { signup, signin };
+function logout(req, res) {
+  try {
+    res.cookie("auth", "", { maxAge: 1 });
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+module.exports = { signup, signin, logout };

@@ -2,7 +2,7 @@ const { validation } = require("../middlewares/validation.middleware");
 const barangSchema = require("../validation/barang.validation");
 const { getAllBarang, getBarang, postBarang, putBarang, deleteBarang } = require("../controllers/barang.controller");
 const router = require("express").Router();
-const { verifyToken, verifyTokenAndAuthorization, verifyTokenAndAdmin } = require("../middlewares/verifyToken.middleware");
+const { verifyTokenAndAuthorization, verifyTokenAndAdmin } = require("../middlewares/verifyToken.middleware");
 
 router.get("/barang", verifyTokenAndAuthorization, getAllBarang);
 router.get("/barang/:id", verifyTokenAndAuthorization, getBarang);
